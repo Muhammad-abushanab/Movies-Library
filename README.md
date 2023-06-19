@@ -5,7 +5,7 @@
 ---
 
 ## WRRC
-![Wrrc image](/assets/img/WRRC.png)
+![Wrrc image](/public/img/WRRC.jpg)
 ***
 
 ## Overview
