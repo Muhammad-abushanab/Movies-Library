@@ -37,3 +37,16 @@
   if this id is not a number it will respond with an error 500;
   + if you type anything that is not exist it will respond with 404 not found for example
   `localhost:3000/hello`
+---
+## **Movie Route**
+
+***It's recommended to have postman in order to see the response in a better way but it works on your browser don't worry :)***
+
+**Very important Note once you clone this repo into your machine please note that you need an api_Key in order to this api work**
+
++ **`/trending`** and you will get all trending movies
++ **`/top-rated`** you will receive all top-rated movies
++ **`/search`** to search about a certain movie but you have  to add `query` in the url parameter **ex:/search?query=spider-man** 
++ **`/tv`** fetchs all tv series
++ **`/tv/top-rated`** fetchs all top-rated series
++ **`/search/actor`** search about actor add paramter **`name`** in the url request **ex:/search/actor?name=chris evans** `
