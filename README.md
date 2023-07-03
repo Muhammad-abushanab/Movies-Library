@@ -79,3 +79,10 @@ complete this steps and run `nodemon server.js` you should see `server started o
 + **`/addmovies`** adds a new movie based on json object
  note that you need to provide the json with **`title,lang,type`** properties
 ![JSON obj](public/img/json.PNG)
+
+
+## What's New 
+
++ **`/getMovie/id`** get a movie based on his id from the database
++ **`/update/id`** update the movie content base on his id . note that you need to send in the **body** the following json format **`'newTitle:"" , newLang: "" , newType : ""`**
++ **`/delete/id`** delete a movie based on his id from the database
