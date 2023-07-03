@@ -56,11 +56,11 @@ app.get('/searchmovies', (req, res) => {
         res.status(400).send(`You should provide some query strings`);
     } else {
         const sql = `SELECT * from movie where title = '${query.title}'`;
-        client.query(sql).then((data)=>{
+        client.query(sql).then((data) => {
             data.rowCount > 0 ? res.status(200).send(data.rows) : res.status(200).send(`No such Movie like ${query.title}`);
-        }).catch((err)=>{
+        }).catch((err) => {
             res.status(500).send(`An Error Occurd while trying to search`)
-            console.log(`Error in search`,err);
+            console.log(`Error in search`, err);
         })
     }
 })
@@ -77,6 +77,49 @@ app.post('/addmovies', (req, res) => {
     }).catch((err) => {
         res.status(500).send('An error occurd while adding the movie');
         console.log('Error Adding movie', err);
+    })
+})
+
+app.put('/update/:id', (req, res) => {
+    const { id } = req.params;
+    const { newTitle, newLang, newType } = req.body;
+    const sql = `UPDATE movie set title = $1 , lang =$2 , type = $3 where id = ${id}`;
+    client.query(sql, [newTitle, newLang, newType]).then((data) => {
+        if (data.rowCount > 0) {
+            res.status(200).send(`Movie ${newTitle} has been successfully Updated`);
+        } else {
+            res.status(409).send(`Movie ${newTitle} already exists`);
+        }
+    }).catch((err) => {
+        res.status(500).send('An error occurd while updateing the movie');
+        console.log('Error updaing the movie', err);
+    })
+})
+
+app.delete('/delete/:id',async (req,res)=>{
+    try {
+        const {id} = req.params;
+        const sql = `delete from movie where id = ${id}`;
+        let data = await client.query(sql);
+        res.status(204).end();
+    } catch (error) {
+        next("deleteCar " + e);
+    }
+})
+
+app.get('/getMovie/:id',(req,res)=>{
+    
+    const {id} = req.params;
+    const sql = `select * from movie where id = ${id}`;
+    client.query(sql).then((data)=>{
+        if (data.rowCount > 0) {
+            res.status(200).send(data.rows);
+        } else {
+            res.status(409).send(`Movie is Not in the dataBase :)`);
+        }
+    }).catch((err)=>{
+        res.status(500).send('An error occurd while fetching the movie');
+        console.log('Error finding the movie', err);
     })
 })
 
