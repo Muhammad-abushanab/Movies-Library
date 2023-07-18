@@ -30,9 +30,9 @@ router.get('/searchmovies', (req, res) => {
 })
 
 router.post('/addmovies', (req, res) => {
-    const { title, lang, type } = req.body;
-    const sql = `INSERT INTO movie (title, lang, type) VALUES ($1, $2, $3) ON CONFLICT (title) DO NOTHING`;
-    client.query(sql, [title, lang, type]).then((data) => {
+    const { title, lang, type, comment, image } = req.body;
+    const sql = `INSERT INTO movie (title, lang, type , comment,image) VALUES ($1, $2, $3 , $4, $5) ON CONFLICT (title) DO NOTHING`;
+    client.query(sql, [title, lang, type, comment,image]).then((data) => {
         if (data.rowCount > 0) {
             res.status(201).send(`Movie ${title} has been successfully Added`);
         } else {
@@ -46,13 +46,13 @@ router.post('/addmovies', (req, res) => {
 
 router.put('/update/:id', (req, res) => {
     const { id } = req.params;
-    const { newTitle, newLang, newType } = req.body;
-    const sql = `UPDATE movie set title = $1 , lang =$2 , type = $3 where id = ${id}`;
-    client.query(sql, [newTitle, newLang, newType]).then((data) => {
+    const { newComment } = req.body;
+    const sql = `UPDATE movie set comment = $1 where id = ${id}`;
+    client.query(sql, [newComment]).then((data) => {
         if (data.rowCount > 0) {
-            res.status(200).send(`Movie ${newTitle} has been successfully Updated`);
+            res.status(200).send(`Movie has been successfully Updated`);
         } else {
-            res.status(409).send(`Movie ${newTitle} already exists`);
+            res.status(409).send(`Movie already exists`);
         }
     }).catch((err) => {
         res.status(500).send('An error occurd while updateing the movie');
@@ -67,7 +67,7 @@ router.delete('/delete/:id', async (req, res) => {
         let data = await client.query(sql);
         res.status(204).end();
     } catch (error) {
-        next("deleteCar " + e);
+        next("deleteMovie " + e);
     }
 })
 
